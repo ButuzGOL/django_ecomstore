@@ -61,6 +61,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'djangodblog.middleware.DBLogMiddleware',
 )
 
@@ -83,6 +84,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'ecomstore.catalog',
     'ecomstore.utils',
+    'ecomstore.cart',
+    'django.contrib.flatpages',
     'djangodblog',
 )
 

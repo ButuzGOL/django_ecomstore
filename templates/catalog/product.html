@@ -22,7 +22,13 @@
            Price: $ {{ p.price }}
       {% endif %}
       <br /><br />
-       [add to cart button]
+       <form method="post" action="." class="cart">
+		     {{ form.as_p }}
+		     <br />
+		     <input type="submit" value="Add To Cart" name="submit" alt="Add To Cart" />
+		</form>
+		<div class="cb"></div>
+
       <br /><br />
       <div class="cb"><br /><br /></div>
       <h3>Product Description</h3>

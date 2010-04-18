@@ -10,9 +10,10 @@ static = os.path.join(
 )
 
 urlpatterns = patterns('',
-                       (r'^catalog/?', 'preview.views.home'),
+                       (r'^catalog/?', 'views.home'),
                        (r'^admin/', include(admin.site.urls)),
                        (r'^', include('catalog.urls')),
+                       (r'^cart/', include('cart.urls')),
 )
 
 if settings.DEBUG:

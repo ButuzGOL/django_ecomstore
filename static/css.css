@@ -111,4 +111,62 @@ div.product_image{
      float:left;
      padding:0 10px 10px 0;
 }
+/* style for Django error messages */
+ul.errorlist{
+     background-color:Red;color:White;
+}
+
+/* styles for shopping cart page */
+table#shopping_cart{
+      width:100%;
+      border-collapse:collapse;
+      color:#616161;
+}
+h1,caption{
+      text-align:left;
+      font-size:x-large;
+      margin-bottom:15px;
+      color:Black;
+}
+th,td{
+      text-align:left;
+      padding:3px;
+}
+thead th{
+      color:White;
+      background-color:#616161;
+}
+tfoot th{
+      height:40px;
+}
+table#shopping_cart th.right, td.right{
+      text-align:right;
+}
+a.cart{
+      color:DarkOrange;
+}
+
+h3{
+     background-color:#98AC5E;
+     color:White;
+     padding:3px;
+     margin-bottom:6px;
+}
+ul#categories{
+     list-style:none;
+}
+ul#categories li{
+     font-weight:bold;
+     color:#616161;
+}
+ul#categories li a{
+     text-decoration:underline;
+}
+div#footer a{
+     color:White;
+     font-size:small;
+     text-decoration:underline;
+     font-weight:normal;
+     margin-right:10px;
+}
 
