@@ -91,4 +91,24 @@ a.skip_link{
      background-color:White;
      text-decoration:none;
 }
+a{
+     color:#98AC5E;
+     font-weight:bold;
+     text-decoration:none;
+}
+a:hover{
+     text-decoration:underline;
+}
+/* category page styles */
+div.product_thumbnail{
+     text-align:center;
+     float:left;
+     width:150px;
+     height:200px;
+}
+/* product page styles */
+div.product_image{
+     float:left;
+     padding:0 10px 10px 0;
+}
 
