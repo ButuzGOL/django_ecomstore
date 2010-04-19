@@ -3,8 +3,6 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ENABLE_SSL = not DEBUG
-
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -90,6 +88,7 @@ INSTALLED_APPS = (
     'ecomstore.cart',
     'django.contrib.flatpages',
     'ecomstore.checkout',
+    'ecomstore.accounts',
     'djangodblog',
 )
 
@@ -116,3 +115,9 @@ AUTHNET_POST_URL = 'test.authorize.net'
 AUTHNET_POST_PATH = '/gateway/transact.dll'
 AUTHNET_LOGIN = 'your login hear'
 AUTHNET_KEY = 'your key here'
+
+ENABLE_SSL = not DEBUG
+
+LOGIN_REDIRECT_URL = '/accounts/my_account/'
+
+AUTH_PROFILE_MODULE = 'accounts.userprofile'

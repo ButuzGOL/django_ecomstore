@@ -26,7 +26,12 @@ def show_checkout(request, template_name='checkout/checkout.html'):
         else:
             error_message = 'Correct the errors below'
     else:
-        form = CheckoutForm()
+        if request.user.is_authenticated():
+            from ecomstore.accounts import profile
+            user_profile = profile.retrieve(request)
+            form = CheckoutForm(instance=user_profile)
+        else:
+            form = CheckoutForm()
     page_title = 'Checkout'
     return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
