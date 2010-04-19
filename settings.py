@@ -3,6 +3,8 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+ENABLE_SSL = not DEBUG
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -62,6 +64,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'ecomstore.SSLMiddleware.SSLRedirect',
     'djangodblog.middleware.DBLogMiddleware',
 )
 
@@ -86,6 +89,7 @@ INSTALLED_APPS = (
     'ecomstore.utils',
     'ecomstore.cart',
     'django.contrib.flatpages',
+    'ecomstore.checkout',
     'djangodblog',
 )
 
@@ -103,4 +107,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
      'ecomstore.utils.context_processors.ecomstore',
 )
 
+GOOGLE_CHECKOUT_MERCHANT_ID = 'your id here'
+GOOGLE_CHECKOUT_MERCHANT_KEY = 'your key here'
+GOOGLE_CHECKOUT_URL = 'https://sandbox.google.com/checkout/ \
+                api/v2/merchantCheckout/Merchant/' + GOOGLE_CHECKOUT_MERCHANT_ID
 
+AUTHNET_POST_URL = 'test.authorize.net'
+AUTHNET_POST_PATH = '/gateway/transact.dll'
+AUTHNET_LOGIN = 'your login hear'
+AUTHNET_KEY = 'your key here'

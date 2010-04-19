@@ -14,6 +14,7 @@ urlpatterns = patterns('',
                        (r'^admin/', include(admin.site.urls)),
                        (r'^', include('catalog.urls')),
                        (r'^cart/', include('cart.urls')),
+                       (r'^checkout/', include('checkout.urls')),
 )
 
 if settings.DEBUG:
