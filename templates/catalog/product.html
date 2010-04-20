@@ -29,8 +29,14 @@
 		</form>
 		<div class="cb"></div>
 
-      <br /><br />
-      <div class="cb"><br /><br /></div>
+      <h3>Related Products</h3>
+    {% for p in p.cross_sells_hybrid %}
+        {% include 'tags/product_thumbnail.html' %}
+    {% empty %}
+        No related products.
+    {% endfor %}
+<div class="cb"><br /><br /></div>
+
       <h3>Product Description</h3>
            {{ p.description }}
 {% endblock %}

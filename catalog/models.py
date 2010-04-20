@@ -38,6 +38,11 @@ class ActiveProductManager(models.Manager):
         return super(ActiveProductManager, self).get_query_set(). \
                                                         filter(is_active=True)
 
+class FeaturedProductManager(models.Manager):
+    def all(self):
+        return super(FeaturedProductManager, self).all(). \
+                                filter(is_active=True).filter(is_featured=True)
+
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True,
@@ -82,3 +87,33 @@ class Product(models.Model):
     
     objects = models.Manager()
     active = ActiveProductManager()
+    featured = FeaturedProductManager()
+    
+    def cross_sells(self):
+        from ecomstore.checkout.models import Order, OrderItem
+        orders = Order.objects.filter(orderitem__product=self)
+        order_items = OrderItem.objects.filter(order__in=orders). \
+                                                        exclude(product=self)
+        products = Product.active.filter(orderitem__in=order_items).distinct()
+        return products
+
+    def cross_sells_user(self):
+        from ecomstore.checkout.models import Order, OrderItem
+        from django.contrib.auth.models import User
+        users = User.objects.filter(order__orderitem__product=self)
+        items = OrderItem.objects.filter(order__user__in=users).exclude(
+                                                                product=self)
+        products = Product.active.filter(orderitem__in=items).distinct()
+        return products
+
+    def cross_sells_hybrid(self):
+        from ecomstore.checkout.models import Order, OrderItem
+        from django.contrib.auth.models import User
+        from django.db.models import Q
+        orders = Order.objects.filter(orderitem__product=self)
+        users = User.objects.filter(order__orderitem__product=self)
+        items = OrderItem.objects.filter( Q(order__in=orders) |
+                      Q(order__user__in=users)
+                      ).exclude(product=self)
+        products = Product.active.filter(orderitem__in=items).distinct()
+        return products

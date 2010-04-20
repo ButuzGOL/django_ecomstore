@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'ecomstore.checkout',
     'ecomstore.accounts',
     'ecomstore.search',
+    'ecomstore.stats',
     'djangodblog',
 )
 
@@ -124,3 +125,5 @@ LOGIN_REDIRECT_URL = '/accounts/my_account/'
 AUTH_PROFILE_MODULE = 'accounts.userprofile'
 
 PRODUCTS_PER_PAGE = 12
+
+PRODUCTS_PER_ROW = 4
