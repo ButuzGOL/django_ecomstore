@@ -1,7 +1,7 @@
 {% extends "catalog.html" %}
 {% block content %}
       <div class="product_image" >
-         <img src="{{ MEDIA_URL }}images/products/main/{{ p.image }}" alt="{{ p.name}}" />
+         <img src="{{ p.image.url }}" alt="{{ p.name}}" />
       </div>
       <h1>{{ p.name }}</h1>
       Brand: <em>{{ p.brand }}</em>
