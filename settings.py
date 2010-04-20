@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'ecomstore.checkout',
     'ecomstore.accounts',
+    'ecomstore.search',
     'djangodblog',
 )
 
@@ -121,3 +122,5 @@ ENABLE_SSL = not DEBUG
 LOGIN_REDIRECT_URL = '/accounts/my_account/'
 
 AUTH_PROFILE_MODULE = 'accounts.userprofile'
+
+PRODUCTS_PER_PAGE = 12

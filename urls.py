@@ -17,6 +17,7 @@ urlpatterns = patterns('',
                        (r'^checkout/', include('checkout.urls')),
                        (r'^accounts/', include('accounts.urls')),
                        (r'^accounts/', include('django.contrib.auth.urls')),
+                       (r'^search/', include('search.urls')),
 )
 
 if settings.DEBUG:

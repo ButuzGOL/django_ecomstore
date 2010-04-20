@@ -4,12 +4,6 @@
       {{ c.description }}
       <br /><br />
       {% for p in products %}
-           <div class="product_thumbnail">
-                 <a href="{{ p.get_absolute_url }}">
-                      <img src="{{ MEDIA_URL }}{{ p.thumbnail }}" alt="{{ p.name }}" class="bn" />
-					  <br />
-                      {{ p.name }}
-                 </a>
-           </div>
+           {% include 'tags/product_thumbnail.html' %}
       {% endfor %}
 {% endblock %}

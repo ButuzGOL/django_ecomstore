@@ -1,5 +1,10 @@
 from django.db import models
 
+class ActiveCategoryManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveCategoryManager, self).get_query_set(). \
+                                                        filter(is_active=True)
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True,
@@ -24,6 +29,14 @@ class Category(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('catalog_category', (), { 'category_slug': self.slug })
+    
+    objects = models.Manager()
+    active = ActiveCategoryManager()
+
+class ActiveProductManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveProductManager, self).get_query_set(). \
+                                                        filter(is_active=True)
 
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -66,4 +79,6 @@ class Product(models.Model):
             return self.price
         else:
             return None
-
+    
+    objects = models.Manager()
+    active = ActiveProductManager()
