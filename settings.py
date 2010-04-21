@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'ecomstore.accounts',
     'ecomstore.search',
     'ecomstore.stats',
+    'tagging',
     'djangodblog',
 )
 

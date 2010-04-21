@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render_to_response
-from ecomstore.catalog.models import Category, Product
+from ecomstore.catalog.models import Category, Product, ProductReview
 from django.template import RequestContext
+from ecomstore.catalog.forms import ProductReviewForm
 
 # this stuff goes at the top of the file, below other imports
 from django.core import urlresolvers
@@ -59,5 +60,67 @@ def show_product(request, product_slug, template_name="catalog/product.html"):
     form.fields['product_slug'].widget.attrs['value'] = product_slug
     # set the test cookie on our first GET request
     request.session.set_test_cookie()
+    product_reviews = ProductReview.approved.filter(product=p).order_by('-date')
+    review_form = ProductReviewForm()
     return render_to_response("catalog/product.html", locals(),
+                              context_instance=RequestContext(request))
+    
+from  django.contrib.auth.decorators import login_required
+from  django.template.loader import render_to_string
+from  django.utils import simplejson
+from  django.http import HttpResponse
+
+@login_required
+def add_review(request):
+    form = ProductReviewForm(request.POST)
+    if form.is_valid():
+        review = form.save(commit=False)
+        slug = request.POST.get('slug')
+        product = Product.active.get(slug=slug)
+        review.user = request.user
+        review.product = product
+        review.save()
+        template = "catalog/product_review.html"
+        html = render_to_string(template, {'review': review })
+        response = simplejson.dumps({'success':'True', 'html': html})
+    else:
+        html = form.errors.as_ul()
+        response = simplejson.dumps({'success':'False', 'html': html})
+    return HttpResponse(response,
+                        content_type='application/javascript; charset=utf-8')
+
+
+import tagging
+from tagging.models import Tag, TaggedItem
+
+@login_required
+def add_tag(request):
+    tags = request.POST.get('tag', '')
+    slug = request.POST.get('slug', '')
+    if len(tags) > 2:
+        p = Product.active.get(slug=slug)
+        html = u''
+        template = "catalog/tag_link.html"
+        for tag in tags.split():
+            tag.strip(',')
+            Tag.objects.add_tag(p, tag)
+        for tag in p.tags:
+            html += render_to_string(template, {'tag': tag })
+        response = simplejson.dumps({'success':'True', 'html': html })
+    else:
+        response = simplejson.dumps({'success':'False'})
+    return HttpResponse(response,
+                        content_type='application/javascript; charset=utf8')
+
+def tag_cloud(request, template_name="catalog/tag_cloud.html"):
+    product_tags = Tag.objects.cloud_for_model(Product, steps=9,
+                                        distribution=tagging.utils.LOGARITHMIC,
+                                               filters={ 'is_active': True })
+    page_title = 'Product Tag Cloud'
+    return render_to_response(template_name, locals(),
+                              context_instance=RequestContext(request))
+
+def tag(request, tag, template_name="catalog/tag.html"):
+    products = TaggedItem.objects.get_by_model(Product.active, tag)
+    return render_to_response(template_name, locals(),
                               context_instance=RequestContext(request))
