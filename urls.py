@@ -18,12 +18,14 @@ urlpatterns = patterns('',
                        (r'^accounts/', include('accounts.urls')),
                        (r'^accounts/', include('django.contrib.auth.urls')),
                        (r'^search/', include('search.urls')),
+                       (r'^', include('marketing.urls')),  
+                       (r'^billing/', include('billing.urls')),
 )
 
 if settings.DEBUG:
     urlpatterns += patterns('',
                         (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-          { 'document_root' : static }),
+                         { 'document_root' : static }),
 )
 
 handler404 = 'ecomstore.views.file_not_found_404'

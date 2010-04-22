@@ -96,3 +96,24 @@ def empty_cart(request):
     user_cart = get_cart_items(request)
     user_cart.delete()
 
+
+from django.conf import settings
+from django.db.models import Max
+from ecomstore.settings import SESSION_AGE_DAYS
+from datetime import datetime, timedelta
+
+def remove_old_cart_items():
+    print "Removing old carts"
+    # calculate date of SESSION_AGE_DAYS days ago
+    remove_before = datetime.now() + timedelta(days=-settings.SESSION_AGE_DAYS)
+    cart_ids = [ ]
+    old_items = CartItem.objects.values('cart_id'). \
+                                    annotate(last_change=Max('date_added')). \
+                                filter(last_change__lt=remove_before).order_by()
+    # create a list of cart IDs that havent been modified
+    for item in old_items:
+        cart_ids.append(item['cart_id'])
+    to_remove = CartItem.objects.filter(cart_id__in=cart_ids)
+    # delete those CartItem instances
+    to_remove.delete()
+    print str(len(cart_ids)) + " carts were removed"

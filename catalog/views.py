@@ -12,6 +12,9 @@ from ecomstore.cart.forms import ProductAddToCartForm
 from ecomstore.stats import stats
 from ecomstore.settings import PRODUCTS_PER_ROW
 
+from django.core.cache import cache
+from ecomstore.settings import CACHE_TIMEOUT
+
 def index(request, template_name="catalog/index.html"):
     search_recs = stats.recommended_from_search(request)
     featured = Product.featured.all()[0:PRODUCTS_PER_ROW]
@@ -23,7 +26,11 @@ def index(request, template_name="catalog/index.html"):
 
 def show_category(request, category_slug, 
                   template_name="catalog/category.html"):
-    c = get_object_or_404(Category, slug=category_slug)
+    category_cache_key = request.path
+    c = cache.get(category_cache_key)
+    if not c:
+        c = get_object_or_404(Category.active, slug=category_slug)
+        cache.set(category_cache_key, c, CACHE_TIMEOUT)
     products = c.product_set.all()
     page_title = c.name
     meta_keywords = c.meta_keywords
@@ -33,7 +40,14 @@ def show_category(request, category_slug,
 
 # new product view, with POST vs GET detection
 def show_product(request, product_slug, template_name="catalog/product.html"):
-    p = get_object_or_404(Product, slug=product_slug)
+    product_cache_key = request.path
+    # get product from cache
+    p = cache.get(product_cache_key)
+    # if a cache miss, fall back on database query
+    if not p:
+        p = get_object_or_404(Product.active, slug=product_slug)
+        # store in cache for next time
+        cache.set(product_cache_key, p, CACHE_TIMEOUT)
     stats.log_product_view(request, p)
     categories = p.categories.all()
     page_title = p.name

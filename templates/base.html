@@ -12,4 +12,6 @@ xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 </head>
 <body>
     {% block site_wrapper %}{% endblock %}
+	{% include "marketing/google_analytics.html" %}
+	{% block receipt_analytics %}{% endblock %}
 </body></html>

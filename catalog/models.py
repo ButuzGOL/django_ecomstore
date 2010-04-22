@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.db.models.signals import post_save, post_delete
+from ecomstore.caching.caching import cache_update, cache_evict
+
 class ActiveCategoryManager(models.Manager):
     def get_query_set(self):
         return super(ActiveCategoryManager, self).get_query_set(). \
@@ -33,6 +36,10 @@ class Category(models.Model):
     
     objects = models.Manager()
     active = ActiveCategoryManager()
+    
+    @property
+    def cache_key(self):
+        return self.get_absolute_url()
 
 class ActiveProductManager(models.Manager):
     def get_query_set(self):
@@ -90,6 +97,10 @@ class Product(models.Model):
     active = ActiveProductManager()
     featured = FeaturedProductManager()
     
+    @property
+    def cache_key(self):
+        return self.get_absolute_url()
+    
     def cross_sells(self):
         from ecomstore.checkout.models import Order, OrderItem
         orders = Order.objects.filter(orderitem__product=self)
@@ -143,3 +154,8 @@ try:
     tagging.register(Product)
 except tagging.AlreadyRegistered:
     pass
+
+post_save.connect(cache_update, sender=Product)
+post_delete.connect(cache_evict, sender=Product)
+post_save.connect(cache_update, sender=Category)
+post_delete.connect(cache_evict, sender=Category)

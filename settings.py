@@ -65,8 +65,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.csrf.middleware.CsrfMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'ecomstore.SSLMiddleware.SSLRedirect',
+    'ecomstore.marketing.urlcanon.URLCanonicalizationMiddleware',   
     'djangodblog.middleware.DBLogMiddleware',
 )
 
@@ -91,7 +94,10 @@ INSTALLED_APPS = (
     'ecomstore.accounts',
     'ecomstore.search',
     'ecomstore.stats',
+    #'ecomstore.billing',
     'tagging',
+    'django.contrib.sitemaps',
+    'django.contrib.redirects',
     'djangodblog',
 )
 
@@ -128,3 +134,12 @@ AUTH_PROFILE_MODULE = 'accounts.userprofile'
 PRODUCTS_PER_PAGE = 12
 
 PRODUCTS_PER_ROW = 4
+
+CANON_URL_HOST = 'www.django-ecommerce.com'
+CANON_URLS_TO_REWRITE = ['django-ecommerce.com', 'modernmusician.com']
+
+SESSION_AGE_DAYS = 90
+SESSION_COOKIE_AGE = 60 * 60 * 24 * SESSION_AGE_DAYS
+
+# seconds to keep items in the cache
+CACHE_TIMEOUT = 60 * 60

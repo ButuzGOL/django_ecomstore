@@ -32,3 +32,36 @@
         </tbody>
     </table>
 {% endblock %}
+{% block receipt_analytics %}
+{% if order %}
+<script type="text/javascript">
+   // IMPORTANT: put your own tracking ID in below
+   var pageTracker = _gat._getTracker('UA-xxxxxxx-1');
+   pageTracker._initData();
+   pageTracker._trackPageview();
+   pageTracker._addTrans(
+      '{{ order.id }}',            // order ID (required)
+      '',                          // store name
+      '{{ order.total }}',         // order total (required)
+      '',                               // order tax
+      '',                          // order shipping
+      '{{ order.shipping_city }}', // city
+      '{{ order.shipping_state }}', // state or province
+      '{{ order.shipping_country }}'// country
+   );
+// Loop through items in the order
+{% for item in order_items %}
+   pageTracker._addItem(
+      '{{ order.id }}',             // order ID (required)
+      '{{ item.sku }}',             // product SKU
+      '{{ item.name }}',                         // product name
+      '',                                                // category
+      '{{ item.price }}',           // product price (required)
+      '{{ item.quantity }}'        // quantity (required)
+   );
+{% endfor %}
+   pageTracker._trackTrans();
+</script>
+{% endif %}
+{% endblock %}
+
