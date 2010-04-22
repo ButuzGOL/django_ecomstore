@@ -1,0 +1,22 @@
+{% extends "catalog.html" %}
+{% block content %}
+<h1>Edit Order Information</h1>
+{{ response }}
+{% if error_message %}
+    <ul class="errorlist">
+         <li>{{ error_message }}</li>
+    </ul>
+{% endif %}
+<form action="." method="post">
+    <table>
+         {{ form.as_table }}
+    </table>
+    <table>
+    <tr>
+         <th colspan="2">
+             <input type="submit" value="Save Information" class="submit" />
+         </th>
+    </tr>
+    </table>
+</form>
+{% endblock %}

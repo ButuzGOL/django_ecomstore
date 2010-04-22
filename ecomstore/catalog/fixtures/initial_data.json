@@ -1,0 +1,98 @@
+[
+  {
+    "pk": 3, 
+    "model": "catalog.category", 
+    "fields": {
+      "meta_description": "Electric guitar", 
+      "meta_keywords": "Electric, guitar", 
+      "description": "Electric guitars", 
+      "created_at": "2010-04-18 00:29:00", 
+      "is_active": 1, 
+      "updated_at": "2010-04-18 00:29:00", 
+      "slug": "electric-guitars", 
+      "name": "Electric guitars"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "catalog.category", 
+    "fields": {
+      "meta_description": "Acoustic guitars", 
+      "meta_keywords": "Acoustic, guitars", 
+      "description": "Acoustic guitars and nothing!", 
+      "created_at": "2010-04-18 00:28:18", 
+      "is_active": 1, 
+      "updated_at": "2010-04-18 00:28:18", 
+      "slug": "acoustic-guitars", 
+      "name": "Acoustic guitars"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "catalog.product", 
+    "fields": {
+      "sku": "123", 
+      "meta_description": "12", 
+      "is_featured": 0, 
+      "meta_keywords": "123", 
+      "name": "Fen", 
+      "is_active": 1, 
+      "brand": "Philips", 
+      "description": "123", 
+      "old_price": "0.00", 
+      "updated_at": "2010-04-21 07:47:32", 
+      "slug": "fen", 
+      "thumbnail": "images/products/thumbnails/1240046973_bulb_yellow.png", 
+      "is_bestseller": 0, 
+      "image": "images/products/main/1240045204_agt_update_misc.png", 
+      "image_caption": "123", 
+      "created_at": "2010-04-19 15:31:59", 
+      "price": "123.00", 
+      "categories": [
+        3
+      ], 
+      "quantity": 123
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "catalog.product", 
+    "fields": {
+      "sku": "15973", 
+      "meta_description": "Ruby Axe Guitar", 
+      "is_featured": 0, 
+      "meta_keywords": "Ruby, Axe, Guitar, 123", 
+      "name": "Ruby Axe Guitar", 
+      "is_active": 1, 
+      "brand": "Rails", 
+      "description": "Let\u2019s walk through a request step by step, and review the way our code is handling all of this. A request to\r\nthe site is first routed through the urls.py file in our root directory, and the requests to the homepage,\r\ncategory, and product views are now being routed through the one line with our include() function in\r\nit:\r\n", 
+      "old_price": "0.00", 
+      "updated_at": "2010-04-21 23:58:25", 
+      "slug": "ruby-axe-guitar", 
+      "thumbnail": "images/products/thumbnails/IE-64.png", 
+      "is_bestseller": 0, 
+      "image": "images/products/main/Firefox-64.png", 
+      "image_caption": "ie", 
+      "created_at": "2010-04-18 00:32:28", 
+      "price": "249.99", 
+      "categories": [
+        3, 
+        2
+      ], 
+      "quantity": 20
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "catalog.productreview", 
+    "fields": {
+      "rating": 5, 
+      "product": 2, 
+      "is_approved": 1, 
+      "title": "Go", 
+      "content": "Go 1", 
+      "user": 1, 
+      "date": "2010-04-21 07:03:18"
+    }
+  }
+]
